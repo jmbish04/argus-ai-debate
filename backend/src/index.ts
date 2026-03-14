@@ -12,13 +12,9 @@ app.post('/debate', async (c) => {
   const threadId = crypto.randomUUID()
   const envMap = c.env as unknown as Record<string, DurableObjectNamespace>
 
-  // Retrieve AI Gateway Token from Secret Store as requested by the user.
-  // We fetch it at runtime so we don't pollute the global scope.
   const aiGatewayToken = await c.env.AI_GATEWAY_TOKEN?.get() ?? '';
-  // In a real scenario, this token might be passed down into the context
-  // or injected into the fetch handler's headers for outbound LLM calls.
 
-  let debateLog: { role: string; content: string }[] = []
+  let debateLog = []
 
   // Step 1: Moderator creates agenda
   const modRes = await routeToAgent(envMap, { binding: 'ModeratorAgent', threadId }, `Create an agenda for: ${proposition}`)
@@ -44,7 +40,6 @@ app.post('/debate', async (c) => {
     proposition,
     verdict: juryRes.response,
     log: debateLog,
-    // (Used for demonstration/validation in the test)
     gatewayTokenConfigured: !!aiGatewayToken
   })
 })

@@ -7,6 +7,5 @@ export const JuryAgent = createAgent({
   system: "You are a Jury member in the ARGUS debate system.\n\nYour role is to render fair, well-reasoned verdicts on propositions.\n\nYour responsibilities:\n1. Weigh evidence objectively\n2. Consider both specialist claims and refuter counter-claims\n3. Provide a clear, reasoned verdict",
   tools: [verifyFact],
   binding: "JuryAgent",
-  // @ts-ignore
   observability: { enabled: true, aiGatewaySlug: "argus-gateway" }
 })
