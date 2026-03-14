@@ -18,7 +18,7 @@ app.post('/debate', async (c) => {
   // In a real scenario, this token might be passed down into the context
   // or injected into the fetch handler's headers for outbound LLM calls.
 
-  let debateLog = []
+  let debateLog: { role: string; content: string }[] = []
 
   // Step 1: Moderator creates agenda
   const modRes = await routeToAgent(envMap, { binding: 'ModeratorAgent', threadId }, `Create an agenda for: ${proposition}`)
